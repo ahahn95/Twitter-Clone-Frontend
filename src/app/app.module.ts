@@ -1,11 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule, Route } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthService } from "./auth/auth.service";
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { CallbackComponent } from './callback/callback.component';
 import { HomeComponent } from './home/home.component';
 
@@ -22,7 +21,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     MatGridListModule
   ],
