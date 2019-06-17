@@ -9,6 +9,9 @@ import { HttpModule } from '@angular/http';
 import { CallbackComponent } from './callback/callback.component';
 import { HomeComponent } from './home/home.component';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatGridListModule } from '@angular/material/grid-list';
+
 
 @NgModule({
   declarations: [
@@ -19,7 +22,9 @@ import { HomeComponent } from './home/home.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpModule
+    HttpModule,
+    BrowserAnimationsModule,
+    MatGridListModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
