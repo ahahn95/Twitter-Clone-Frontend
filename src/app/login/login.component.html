@@ -1,0 +1,11 @@
+<mat-grid-list cols="2" rowHeight="fit">
+  <mat-grid-tile class="left"></mat-grid-tile>
+  <mat-grid-tile class="right">
+    <div class="right-contents">
+      <h1 class="mat-h1">Twitter Clone</h1>
+      <button mat-raised-button color="primary" *ngIf="!auth.isAuthenticated()" (click)="auth.login()">
+        Log in with Google
+      </button>
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>

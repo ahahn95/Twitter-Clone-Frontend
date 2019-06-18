@@ -1,0 +1,23 @@
+:host {
+    height: 100%;
+}
+
+mat-grid-list {
+    height: 100%;
+    background: url("https://i.pinimg.com/originals/3c/24/46/3c24462450c2a902bf7e18f3d9aada81.jpg");
+}
+
+mat-grid-tile {
+    flex-direction: column;
+}
+
+.left {
+}
+
+.right {
+    background-color: white;
+}
+
+.right-contents {
+    text-align: center;
+}

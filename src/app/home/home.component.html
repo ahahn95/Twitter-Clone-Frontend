@@ -1,3 +1,16 @@
-<p>
-  home works!
-</p>
+<mat-toolbar color="primary">
+  <h2 class="mat-h2">Twitter Clone</h2>
+  <span class="fill-remaining-space"></span>
+  <div class="buttons">
+    <button mat-raised-button color="primary">
+      Tweet
+    </button>
+    <button mat-raised-button color="primary" (click)="auth.logout()">
+      Log Out
+    </button>
+  </div>
+</mat-toolbar>
+<mat-grid-list cols="4" rowHeight="fit" gutterSize="10px">
+  <mat-grid-tile colspan="1" class="left">Left Content</mat-grid-tile>
+  <mat-grid-tile colspan="3" class="right">Right Content</mat-grid-tile>
+</mat-grid-list>

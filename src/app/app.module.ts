@@ -10,20 +10,26 @@ import { HomeComponent } from './home/home.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatButtonModule } from '@angular/material/button';
+import { LoginComponent } from './login/login.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     CallbackComponent,
-    HomeComponent
+    HomeComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatGridListModule
+    MatGridListModule,
+    MatButtonModule,
+    MatToolbarModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

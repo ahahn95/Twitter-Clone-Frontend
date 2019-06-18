@@ -1,0 +1,20 @@
+:host {
+    height: 100%;
+}
+
+mat-grid-list {
+    height: 100%;
+}
+
+.fill-remaining-space {
+    flex: 1 1 auto;
+  }
+
+mat-grid-tile {
+    background-color: #D3D3D3;
+    border-radius: 5px;
+}
+
+button:not(:last-of-type) {
+    margin: 10px;
+}
