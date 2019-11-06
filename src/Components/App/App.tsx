@@ -1,70 +1,32 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { User } from "interfaces/User";
+import { Auth } from "auth";
+import { Login } from "components/Login/Login";
+import { Home } from "components/Home/Home";
 
 import styles from "./App.module.css";
-import { signInRequest, getUsers } from "api/api";
-import { Auth } from "auth";
 
-const HomePage: React.FC = () => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [s, ss] = useState(Auth.isUserAuthenticated());
-  const [users, setUsers] = useState<User[]>([]);
+const App: React.FC = () => {
+  const [isAuth, setIsAuth] = useState<boolean>(Auth.isUserAuthenticated());
 
-  const signIn = () => {
-    signInRequest(email, password)
-      .then(() => void ss(true))
-      .then(getUserInfo)
-      .catch(void ss(false));
-  };
-
-  const getUserInfo = () => {
-    getUsers().then(setUsers);
-  };
-
-  const logOut = () => {
-    Auth.deauthenticateUser().then(() => {
-      setUsers([]);
-      ss(false);
-    });
+  const signOut = () => {
+    Auth.deauthenticateUser().then(() => setIsAuth(false));
   };
 
   return (
-    <div>
-      <div className="sign-in">
-        <h1>Twitter Clone</h1>
-        <h2>Sign In</h2>
-        <input
-          type="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-        />
-        <button onClick={signIn}>Sign In</button>
-        <button onClick={logOut}>Log Out</button>
+    <>
+      {isAuth && (
+        <header>
+          <div>This is a header</div>
+          <button onClick={signOut}>Sign Out</button>
+        </header>
+      )}
+      <div id="main-content">
+        {isAuth ? <Home /> : <Login setIsAuth={setIsAuth} />}
       </div>
-      <div>{s ? "Logged in" : "Not logged in"}</div>
-      <div>JWT: {Auth.getToken()}</div>
-      <h2>Users</h2>
-      <div>
-        {users.map((user: User) => {
-          return <div>{user.name}</div>;
-        })}
-      </div>
-      <h2 className="sign-up"></h2>
-    </div>
+      <footer>created by Alex Hahn (https://github.com/ahahn95)</footer>
+    </>
   );
-};
-
-const App: React.FC = () => {
-  const [isAuth, setIsAuth] = useState<boolean>(false);
-
-  return <>{isAuth ? null : <HomePage />}</>;
 };
 
 export default App;

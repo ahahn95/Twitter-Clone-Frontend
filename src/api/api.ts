@@ -21,3 +21,17 @@ export const signInRequest = (
 export function getUsers(): Promise<User[]> {
   return get("/user");
 }
+
+export interface ISignUpRequest {
+  email: string;
+  name: string;
+  password: string;
+}
+
+// export function createUser(
+//   email: string,
+//   name: string,
+//   password: string
+// ): Promise<> {
+//   return post("/user");
+// }
