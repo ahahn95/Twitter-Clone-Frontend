@@ -2,10 +2,15 @@ import { get, post } from "./ajax";
 import { User } from "interfaces/User";
 import { Auth } from "auth";
 
-export const signInRequest = (
-  email: string,
-  password: string
-): Promise<void> => {
+export type ISignInRequest = {
+  email: string;
+  password: string;
+};
+
+export const signInRequest = ({
+  email,
+  password
+}: ISignInRequest): Promise<void> => {
   return post(
     "/signIn",
     {

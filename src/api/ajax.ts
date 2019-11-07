@@ -32,7 +32,7 @@ export function requestFetch(
         if (response.ok) {
           resolve(response.json());
         } else {
-          reject(response);
+          reject(response.statusText);
         }
       })
       .catch(reject);

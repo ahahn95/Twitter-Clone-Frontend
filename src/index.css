@@ -1,3 +1,6 @@
+@import "../node_modules/every-layout-react/dist/index.css";
+@import "./styles/spinner.css";
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",

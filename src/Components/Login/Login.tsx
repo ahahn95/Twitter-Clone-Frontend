@@ -1,8 +1,9 @@
-import React, { useState, useRef } from "react";
-import { signInRequest, getUsers, ISignUpRequest } from "api/api";
-import { User } from "interfaces/User";
+import React, { useState } from "react";
+import { signInRequest, ISignInRequest } from "api/api";
 import { Auth } from "auth";
 import { Switcher, Center, Stack } from "every-layout-react";
+import Modal from "react-modal";
+import { useFormik } from "formik";
 
 import reactLogo from "../../assets/react.png";
 import everyLayoutLogo from "../../assets/every-layout.png";
@@ -18,41 +19,71 @@ interface Props {
 }
 
 export const Login: React.FC<Props> = props => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const inputel = useRef<any>(null);
+  const [loginLoading, setLoginLoading] = useState(false);
+  const [loginError, setLoginError] = useState(false);
+
+  const loginForm = useFormik({
+    initialValues: {
+      login_email: "",
+      login_password: ""
+    },
+    onSubmit: values =>
+      handleSignIn({
+        email: values.login_email,
+        password: values.login_password
+      })
+  });
 
   const logOut = () => {
     Auth.deauthenticateUser();
   };
 
-  const handleSignIn = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    signInRequest(email, password).then(() => props.setIsAuth(true));
+  const handleSignIn = (request: ISignInRequest) => {
+    setLoginLoading(true);
+    signInRequest(request)
+      .then(() => {
+        setLoginLoading(false);
+        props.setIsAuth(true);
+      })
+      .catch(statusText => {
+        setLoginError(statusText);
+      });
   };
 
   const handleSignUp = (e: any) => {
     e.preventDefault();
-    console.log(new FormData(inputel.current).getAll("signup_name"));
+  };
+
+  const handleReset = (e: any) => {
+    setLoginLoading(false);
+    setLoginError(false);
   };
 
   const renderProjectInfo = () => {
     return (
-      <div className={styles.asdf}>
-        <Center gutters={100} max="50ch" intrinsic andText>
+      <div className={styles["section-container"]}>
+        <Center max="65ch" intrinsic andText>
           <h1>Twitter Clone</h1>
           <h2>frontend</h2>
-          <div className={styles["icon-container"]}>
-            <img src={reactLogo} />
-            <img src={everyLayoutLogo} />
-            <img src={typescriptLogo} />
-          </div>
+          <Switcher
+            className={styles["icon-container"]}
+            threshold="50px"
+            space="50px"
+          >
+            <img src={reactLogo} alt="react" />
+            <img src={everyLayoutLogo} alt="every-layout" />
+            <img src={typescriptLogo} alt="typescript" />
+          </Switcher>
           <h2>backend</h2>
-          <div className={styles["icon-container"]}>
+          <Switcher
+            className={styles["icon-container"]}
+            threshold="50px"
+            space="50px"
+          >
             <img src={dotnetcoreLogo} />
             <img src={cleanArchitectureLogo} />
             <img src={mysql} />
-          </div>
+          </Switcher>
         </Center>
       </div>
     );
@@ -60,31 +91,32 @@ export const Login: React.FC<Props> = props => {
 
   const renderSignIn = () => {
     return (
-      <div>
-        <Center max="50ch" andText className={styles["signin-container"]}>
-          <Switcher>
-            <h2>Sign In</h2>
-            <form onSubmit={handleSignIn}>
-              <div className={styles["login__form"]}>
-                <input
-                  name="login_email"
-                  type="email"
-                  required
-                  placeholder="email"
-                ></input>
-                <input
-                  name="login_password"
-                  type="password"
-                  required
-                  placeholder="password"
-                ></input>
-                <button type="submit">Sign In</button>
-              </div>
-            </form>
-          </Switcher>
-          <div className={styles["signUp__container"]}>
+      <div className={styles["section-container"]}>
+        <Center max="80ch" andText intrinsic>
+          <h2>Sign In</h2>
+          <form onSubmit={loginForm.handleSubmit}>
+            <Switcher className={styles["login-form"]} threshold="50px">
+              <input
+                name="login_email"
+                type="email"
+                required
+                placeholder="email"
+                onChange={loginForm.handleChange}
+              ></input>
+              <input
+                name="login_password"
+                type="password"
+                required
+                placeholder="password"
+                onChange={loginForm.handleChange}
+              ></input>
+              <button type="submit">Sign In</button>
+            </Switcher>
+          </form>
+
+          <div>
             <h2>Sign Up</h2>
-            <form onSubmit={handleSignUp} ref={inputel}>
+            <form onSubmit={handleSignUp}>
               <Stack>
                 <input
                   name="signup_name"
@@ -96,14 +128,12 @@ export const Login: React.FC<Props> = props => {
                   name="singup_email"
                   type="email"
                   placeholder="email"
-                  onChange={e => setEmail(e.target.value)}
                   required
                 ></input>
                 <input
                   name="signup_password"
                   type="password"
                   placeholder="password"
-                  onChange={e => setPassword(e.target.value)}
                   required
                 ></input>
                 <input
@@ -122,12 +152,23 @@ export const Login: React.FC<Props> = props => {
   };
 
   return (
-    <Switcher
-      className={styles["container-wrapper"]}
-      containerClassName={styles["container-intermidiate-wrapper"]}
-    >
-      {renderProjectInfo()}
-      {renderSignIn()}
-    </Switcher>
+    <>
+      {loginLoading && (
+        <Modal isOpen={true} className={styles["modal"]}>
+          {loginError ? (
+            <Stack>
+              <div>{loginError}</div>
+              <button onClick={handleReset}>Reset</button>
+            </Stack>
+          ) : (
+            <div className="spinner"></div>
+          )}
+        </Modal>
+      )}
+      <Switcher className={styles["login-container"]}>
+        {renderProjectInfo()}
+        {renderSignIn()}
+      </Switcher>
+    </>
   );
 };

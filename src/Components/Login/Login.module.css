@@ -1,56 +1,45 @@
-.signin-container {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.container-wrapper {
+.login-container {
   width: 100%;
   display: flex;
 }
 
-.container {
-  flex: 1;
-}
-
-.login__form {
-  position: relative;
-  display: flex;
-  justify-content: center;
-}
-
-.login__form > * + * {
-  margin-left: 10px;
-}
-
-.signUp__container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.asdf {
-  background-color: red;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.container-intermidiate-wrapper {
+.login-container > div {
   display: flex;
   flex-grow: 1;
 }
 
-.icon-container {
+.section-container {
   display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.section-container:first-child {
+  background-color: red;
+}
+
+.icon-container {
+  width: 100%;
 }
 
 .icon-container > * {
-  width: 33%;
+  display: flex;
+  align-items: center;
 }
 
-.icon-container > * + * {
-  margin-left: 10%;
+.icon-container > * > * {
+  height: 100%;
+}
+
+.modal {
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  right: 25%;
+  bottom: 25%;
+  background-color: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
 }
